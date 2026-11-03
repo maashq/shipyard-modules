@@ -52,7 +52,7 @@ existing resource to be replaced.
 | ---------------------- | ---------------------------------------------------------- | ------------------------------ |
 | `azure-resource-group` | the resource group                                         | always                         |
 | `azure-network`        | VNet, app subnet, Postgres subnet, private DNS zone + link | Postgres is private            |
-| `azure-identity`       | user-assigned identity                                     | always                         |
+| `azure-identity`       | user-assigned identity, `AcrPull` on the tenant registry   | always                         |
 | `azure-loganalytics`   | workspace                                                  | `modules.logAnalytics.enabled` |
 | `azure-environment`    | Container Apps managed environment                         | always                         |
 | `azure-keyvault`       | vault, RBAC assignments for the app identities             | `modules.keyvault.enabled`     |

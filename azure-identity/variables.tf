@@ -13,6 +13,12 @@ variable "location" {
   description = "Azure region."
 }
 
+variable "pull_registry_ids" {
+  type        = list(string)
+  description = "Container registries this identity is granted AcrPull on. The tenant registry, or nothing."
+  default     = []
+}
+
 variable "tags" {
   type    = map(string)
   default = {}
