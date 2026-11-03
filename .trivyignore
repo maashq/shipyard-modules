@@ -1,0 +1,29 @@
+# Suppressions for `trivy config modules/`.
+#
+# Every entry carries a reason and an expiry. Trivy enforces the expiry: on the
+# date below the finding comes back, the test in
+# packages/emitters/terraform/src/modules.test.ts fails, and someone has to
+# either fix the module or renew the entry with a fresh justification. A
+# suppression nobody revisits is a finding that was deleted rather than
+# handled.
+#
+# The reasoning also lives next to the resource it applies to. This file is the
+# list; the module says why.
+
+# AZU-0013 — Key Vault has no deny-by-default network ACL.
+#
+# Two things that must reach the vault sit outside any network we control:
+# Terraform writing the generated Postgres credentials from a GitHub-hosted
+# runner or the direct executor, neither of which has a stable address; and
+# Container Apps resolving a secret reference at revision start-up, which is
+# not on Key Vault's trusted-services list, so `bypass = "AzureServices"` does
+# not cover it. Closing the vault stops apps from starting.
+#
+# Deny-by-default needs a private endpoint and a vault-scoped subnet, which is
+# separate work with its own cost. The gate until then is RBAC: no access
+# policies, Secrets User for apps, Secrets Officer only for the deploying
+# principal. `var.network_acls` is there for an operator who has done the
+# private-endpoint work.
+#
+# See modules/azure-keyvault/README.md.
+AVD-AZU-0013 exp:2027-03-01
